@@ -3,6 +3,6 @@
 
 Menggunakan Framework [ExpressJS](https://github.com/expressjs/express)<br>
 Package yang Digunakan : <br>
-- [Neaptaptic](https://github.com/wagenaartje/neataptic)
+- [Neataptic](https://github.com/wagenaartje/neataptic)
 
 

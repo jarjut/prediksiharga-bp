@@ -1512,11 +1512,15 @@ router.get('/', function(req, res, next) {
 
   //Inisialisasi Jaringan 4 Nodes Input, 10 Nodes Hidden Layer, 1 Nodes Input
   var network = new architect.Perceptron(4,10,1);
+
   //Backpropagation Training
+  var error = 0.001;
+  var iterations = 5000;
+  var rate = 0.05;
   network.train(myTrainingSet,{
-    error: 0.001,
-    iterations: 5000,
-    rate: 0.01
+    error: error,
+    iterations: iterations,
+    rate: rate
   });
 
   //Data Testing (144 Data)
@@ -1956,19 +1960,39 @@ router.get('/', function(req, res, next) {
     }
   ];
 
-  var squaredError = [];
-  myTestingSet.forEach(function(item,index){
+  var mse = 0;
+  var mae = 0;
+  var nTarget = 0;
+  var nHasil = 0;
+  var n = myTestingSet.length; //Jumlah Data Testing
+
+  myTestingSet.forEach(function(item){
     var hasil = network.activate([item.input[0], item.input[1], item.input[2], item.input[3]]);
     item.hasil = hasil;
-    squaredError.push(Math.pow(hasil[0] - item.output[0], 2));
+    nTarget += item.output[0];
+    nHasil += hasil[0];
+    mse += Math.pow(hasil[0] - item.output[0], 2);
+    mae += Math.abs(hasil[0] - item.output[0]);
   });
+
+  mse/=n; //Nilai MSE
+  mae/=n; //Nilai MAE
+  var meanTarget = nTarget/n;
+  var meanHasil = nHasil/n;
+  var spa = 0;
+  var sp = 0;
+  var sa = 0;
+  myTestingSet.forEach(function (item) {
+    sp += Math.pow(item.hasil[0] - meanHasil,2);
+    sa += Math.pow(item.output[0] - meanTarget, 2);
+    spa += (item.hasil[0] - meanHasil) * (item.output[0] - meanTarget);
+  });
+  sp/=n-1;
+  sa/=n-1;
+  spa/=n-1;
+  var r = spa/Math.sqrt(sp*sa); //Nilai Koefisien Korelasi
   
-  var mse = 0;
-  squaredError.forEach(function(item){
-    mse+=item;
-  });
-  // res.send(myTestingSet);
-  res.render('index', { testing: myTestingSet, mse: mse});
+  res.render('index', { error: error, iterations:iterations, rate:rate, testing: myTestingSet, mse: mse, mae:mae, korelasi:r});
 });
 
 module.exports = router;

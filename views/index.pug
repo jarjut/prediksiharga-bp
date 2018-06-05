@@ -5,11 +5,14 @@ block content
     div(class='col s9 offset-s1')
       h4 Prediksi Harga Ayam
       blockquote(class='red lighten-5')
-        |<strong>Backpropagation</strong> <br>
-        |Toleransi Error : 0,001 <br>
-        |Jumlah Iterasi : 5000 <br>
-        |Learning Rate : 0,05 
-      h6 Nilai MSE = #{mse}
+        |<strong style='font-size: 20px'>Backpropagation</strong> <br>
+        |Toleransi Error : #{error} <br>
+        |Jumlah Iterasi : #{iterations} <br>
+        |Learning Rate : #{rate} 
+      ul.collection
+        li.collection-item Nilai MSE = #{mse}
+        li.collection-item Nilai MAE = #{mae}
+        li.collection-item Koefisien Korelasi = #{korelasi}
       br
       p Tabel Data Testing 
         span(class='badge') Data sudah dinormalisasi

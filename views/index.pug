@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  div(class='row')
+    div(class='col s9 offset-s1')
+      h4 Prediksi Harga Ayam
+      blockquote(class='red lighten-5')
+        |<strong>Backpropagation</strong> <br>
+        |Toleransi Error : 0,001 <br>
+        |Jumlah Iterasi : 5000 <br>
+        |Learning Rate : 0,05 
+      h6 Nilai MSE = #{mse}
+      br
+      p Tabel Data Testing 
+        span(class='badge') Data sudah dinormalisasi
+      table(class='striped centered responsive-table')
+        thead
+          tr
+            th Harga t-21
+            th Harga t-14
+            th Harga t-7
+            th Harga t
+            th Target Output(t+7)
+            th Hasil Output(t+7)
+        tbody
+          each item in testing
+            tr
+              td= item.input[0]
+              td= item.input[1]
+              td= item.input[2]
+              td= item.input[3]
+              td= item.output[0]
+              td= item.hasil[0]
+

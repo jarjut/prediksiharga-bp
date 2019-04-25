@@ -1510,7 +1510,7 @@ router.get('/', function(req, res, next) {
     }
   ];
 
-  //Inisialisasi Jaringan 4 Nodes Input, 10 Nodes Hidden Layer, 1 Nodes Input
+  //Inisialisasi Jaringan 4 Nodes Input, 10 Nodes Hidden Layer, 1 Nodes Output
   var network = new architect.Perceptron(4,10,1);
 
   //Backpropagation Training
@@ -1518,6 +1518,7 @@ router.get('/', function(req, res, next) {
   var iterations = 5000;
   var rate = 0.05;
   network.train(myTrainingSet,{
+    log: 500,
     error: error,
     iterations: iterations,
     rate: rate
